@@ -99,18 +99,74 @@ Voor het te lezen bestand wordt DS2 gebruikt.
 Idealiter zouden alle operaties orde 1 zijn, maar helaas kan dat in de praktijk niet, we zullen dus een keus moeten maken.
 Kies uit het JAVA collection framework een datastructuur uit, die het best voor de mutatie ADT gebruikt kan worden. Licht je antwoord toe. Geef ook de verwerking in msec, uitgaande van bovenstaande uitgangspunten bij vraag c en d.
 
+Een mogelijke oplossing is de keuze van een HashMap. Een HashMap heeft afhankelijk van de keuze van de capaciteit een BigO van O(1)
+De kans op een collision is n/capaciteit. Hoe groter we de capaciteit kiezen hoe kleiner de kans op collisions. 
+
+Als we uitgaan van een Hashmap met O(1) voor Insert, Zoeken en Update krijgen we de volgende resutaten:
+
+De verwerking duurt dan:
+
+| Symbool | Betekenis | Voor x elementen |
+|:---:|:----|:-----|
+| U | Aantal updates |  5000 |
+| N | Nieuwe mutaties | 40000 |
+| Z | Klanten zoeken  O(1) per actie | N  |
+| I | Invoeren O(1) + O(10) per actie | N * 11 |
+| A | Aanpassen / Muteren O(1) per actie | U |
+
+| Formules |
+|-------|
+| DS2(T) = Z + (N * I) + (U*A) |
+| DS2(T) = (45000) + (40000*11) + (5000)  |
+| DS2(T) = 45000 + 440000 + 5000 |
+| DS2(T) = 490 seconden
+
 ## Opdracht 1.3 (voor een 4)
 Verandert je keuze voor de mutatie ADT, als je ervan uitgaat, dat toegang tot deze datastructuur gelijktijdig kan plaatsvinden (immers, helpdeskmedewerkers kunnen gelijktijdig wijzigingen aanbrengen). Licht je antwoord toe.
 
+Mijn keuze zou veranderen om gelijktijdige toegang te kunnen garanderen. Een mogelijk oplossing zou de ConcurrentHashmap kunnen zijn die ook in de meeste gevallen BigO O(1) is
 ## Opdracht 1.4 (voor een 5)
 Kies uit het JAVA collection framework een datastructuur uit, die het best voor de nacht ADT gebruikt kan worden. Licht je antwoord toe. Geef ook de verwerking in msec, uitgaande van bovenstaande uitgangspunten bij vraag c en d.
 
+Voor de nacht ADT zit het grootste probleem (zie opgave 1.1) is het lezen van het mutatiebestand. Dit is door de keuze van HashMAp of ConcurrentHashMap al sterk verbetert. 
+Met gebruikmaking van de Hashmap wijzigt de tijd van de operaties als volgt
+
+
+| Symbool | Betekenis | Voor x elementen |
+|:---:|:----|:-----|
+| L | Aantal leesacties DS2 O(1) |  40000 |
+| S | Aantal schrijfacties DS3 O(1) | 40000 |
+
+| Formules |
+|-------|
+| DS2(T) = O(L) = L * L = 40000 | 
+| DS3(T) = S * O(1) = S = 40000 |
+| Totaal lezen + schrijven = 80 seconden  |
 
 ## Opdracht 1.5 (voor een 6)
 Verandert je keuze voor de nacht ADT, als je ervan uitgaat, dat het inlezen van de data uit de file door een aantal threads uitgevoerd wordt, die ieder steeds een record uit de file lezen en deze verwerken. Licht je antwoord  toe.
 
+Als we gebruik maken van een (onbeperkt) aantal threads kan (theoretisch) O(1) worden gehaald. Bij gebruik van 'n' threads
+Dit geeft de volgende resultaten
+
+| Symbool | Betekenis | Voor x elementen |
+|:---:|:----|:-----|
+| U | Aantal updates |  5000 |
+| N | Nieuwe mutaties | 40000 |
+| Z | Klanten zoeken  O(1) per actie | N  |
+| I | Invoeren O(1) + O(1) per actie | N * 2  |
+| A | Aanpassen / Muteren O(1) per actie | U |
+
+| Formules |
+|-------|
+| DS2(T) = Z + (N * I) + (U*A) |
+| DS2(T) = (45000) + (2*40000) + (5000)  |
+| DS2(T) = 45000 + 80000 + 5000 |
+| DS2(T) = 170 seconden
+
 ## Opdracht 1.6 (voor een 8)
 Maak een eigen implementatie van een datastructuur voor de mutatie ADT, die beter (lees: sneller) is dan een standaard collectie uit het JCF. Hiervoor zul je ofwel via compositie een eigen datastructuur moeten maken, ofwel gebruik maken van de abstracte collecties uit het JCF. Implementeer deze in JAVA. Licht je keuze toe.
+
 
 ## Opdracht 1.7 (voor een 10)
 Idem, maar dan voor de nacht ADT. Licht je keuze toe.
