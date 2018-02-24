@@ -174,7 +174,7 @@ Dit package kent een <code>Publisher</code>, <code>Producer</code>, <code>Subscr
 Een <code>Publisher</code> kan een bericht versturen en een <code>Subscriber</code> kan aangeven dat hij een bericht wil ontvangen. Tot slot kan een <code>Producer</code> zowel een bericht ontvangen en versturen.
 Een mogelijke implementatie is dan zoals hieronder aangegeven. 
  
-![Integration scenario](https://github.com/charleskorthout/UC_SelectieCollectie/img/flow.jpg)
+![Integration scenario](img/Flow.jpg)
 
 In dit voorbeeld wordt een mutatie ingevoerd in de <code>MutationPublisher</code>. Het resultaatbericht wordt uitgestuurd naar de <code>UpdateProducer</code>. De <code>UpdateProducer</code> raadpleegt eventueel de <code>SearchProducer</code> om specifieke klantgegevens op te vragen als deze nog niet beschikbaar zijn. De <code>SearchProducer</code> stuurt twee verschillende berichten uit:
 - een <code>DurationMessage</code> die aangeeft dat het een 'x' aantal ms kost voor deze operatie.
