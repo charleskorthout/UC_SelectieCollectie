@@ -167,7 +167,28 @@ Dit geeft de volgende resultaten
 ## Opdracht 1.6 (voor een 8)
 Maak een eigen implementatie van een datastructuur voor de mutatie ADT, die beter (lees: sneller) is dan een standaard collectie uit het JCF. Hiervoor zul je ofwel via compositie een eigen datastructuur moeten maken, ofwel gebruik maken van de abstracte collecties uit het JCF. Implementeer deze in JAVA. Licht je keuze toe.
 
+Het is erg moeilijk om een betere structuur te vinden voor de mutatie ADT dan de Hashmap of de ConcurrentHashmap die hierboven is aangegeven.
+Wat wel mogelijk is is een efficientere manier van het verwerken van de data. Een mogelijk hulpmiddel hierbij is de Reactive Java modules in de <code>java.util.concurrent.Flow</code> bibliotheek.
+Dit package kent een <code>Publisher</code>, <code>Producer</code>, <code>Subscriber</code>
 
+Een <code>Publisher</code> kan een bericht versturen en een <code>Subscriber</code> kan aangeven dat hij een bericht wil ontvangen. Tot slot kan een <code>Producer</code> zowel een bericht ontvangen en versturen.
+Een mogelijke implementatie is dan zoals hieronder aangegeven. 
+ 
+![Integration scenario](./flow.png)
+
+In dit voorbeeld wordt een mutatie ingevoerd in de <code>MutationPublisher</code>. Het resultaatbericht wordt uitgestuurd naar de <code>UpdateProducer</code>. De <code>UpdateProducer</code> raadpleegt eventueel de <code>SearchProducer</code> om specifieke klantgegevens op te vragen als deze nog niet beschikbaar zijn. De <code>SearchProducer</code> stuurt twee verschillende berichten uit:
+- een <code>DurationMessage</code> die aangeeft dat het een 'x' aantal ms kost voor deze operatie.
+- een <code>CustomerDetailMessage</code> die additionele informatie van de klant geeft
+
+De <code>UpdateProducer</code> heeft nu alle informatie en stuurt meerdere berichten uit:
+- een <code>Durationbericht</code> uit met het aantal ms dat de operatie kost.
+- een <code>UpdateLogMessage</code> met informatie over de transactie voor logging
+- een <code>UpdateAuditMessage</code> met informatie voor auditing en controle.
+
+De <code>DurationSubscriber</code>, <code>AuditingSubscriber</code> en de <code>LoggingSubscriber</code> geven bij de <code>UpdateProducer</code> aan dat ze de specifieke berichten willen ontvangen.
+
+De oplossing is schaalbaar, eventueel kan er per klant/product een producer/subsrciber worden gekozen waardoor de oplossing afhankelijk is van het aantal resources.
+ 
 ## Opdracht 1.7 (voor een 10)
 Idem, maar dan voor de nacht ADT. Licht je keuze toe.
 
